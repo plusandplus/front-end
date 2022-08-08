@@ -7,7 +7,7 @@ export const AdminInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px 30px 10px;
+  padding: 30px 10px;
   margin-bottom: 30px;
   box-sizing: border-box;
   flex-direction: column;
@@ -70,6 +70,42 @@ export const ContentItem = styled(Link)`
   }
 `;
 
-export const IconText = styled.span`
-  font-size: 15px;
+export const ContentContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`;
+
+export const Content = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  padding: 30px;
+  border-right: 1px solid ${theme.colors.border};
+  text-decoration: none;
+  color: #000;
+
+  &:last-child {
+    border: none;
+  }
+
+  .icon {
+    color: ${theme.colors.main};
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+  @media screen and (max-width: 400px) {
+    .icon {
+      font-size: 20px;
+    }
+    > span {
+      font-size: 10px;
+    }
+  }
+
+  &:hover {
+    & > * {
+      transform: scale(1.1);
+    }
+  }
 `;
