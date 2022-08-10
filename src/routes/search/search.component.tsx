@@ -82,7 +82,7 @@ export default function Search(): JSX.Element {
   };
 
   const searchProps = {
-    localId: searchRegionName.id,
+    localId: searchRegionName.id ? searchRegionName.id : 0,
     stayIds: searchStayType,
     themeIds: searchTheme,
     minprice: Number(`${minprice}0000`),

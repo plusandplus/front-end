@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from '../hooks/index.hook';
 import { arrDestruct } from '../utils/arrDestruct';
 
 export const fetchLocal = createAsyncThunk('search/local', async () => {

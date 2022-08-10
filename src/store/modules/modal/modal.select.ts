@@ -53,3 +53,13 @@ export const selectIsErrorModalOpen = createSelector(
   [selectModalReducer],
   (modal) => modal.isErrorModalOpen
 );
+
+export const selectIsAdminAddCategoryModalOpen = createSelector(
+  [selectModalReducer],
+  (modal) => modal.isAdminAddCategoryModalOpen
+);
+
+export const selectIsAdminEditCategoryModalOpen = createSelector(
+  [selectModalReducer],
+  (modal) => modal.isAdminEditCategoryModalOpen
+);
