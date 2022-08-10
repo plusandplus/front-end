@@ -50,10 +50,16 @@ export default function StayDescription(): JSX.Element {
   const STAY_ID = Number(location.pathname.split('/')[2]);
 
   const [isLiked, setIsLiked] = useState(false);
+  const [isMapLoad, SetIsMapLoad] = useState(false);
+
+  const loadMap = () => {
+    SetIsMapLoad(true);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getStay(STAY_ID));
+      loadMap();
     };
 
     fetchData();
@@ -118,7 +124,7 @@ export default function StayDescription(): JSX.Element {
 
         <ContentsContainer>
           <SubTitle>Map</SubTitle>
-          {stayData.id !== 0 && (
+          {isMapLoad && (
             <Map
               y={parseFloat(stayData.y)}
               x={parseFloat(stayData.x)}

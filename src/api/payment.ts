@@ -64,3 +64,25 @@ export const postOrder = async (postOrder: postOrderProps, token: string) => {
     return response.data;
   } catch (e) {}
 };
+
+/**
+ * 룸정보와, 날짜를 입력하여 방이 유효한지 상태를 얻는다.
+ * accessable, progress 두가지 상태
+ *
+ * * @param roomId
+ */
+export const getRoomState = async (roomId: number) => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/rooms/${roomId}/status`
+  );
+
+  return response.data;
+};
+
+export const patchRoomState = async (roomId: number) => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/rooms/${roomId}/status`
+  );
+
+  return response.data;
+};
