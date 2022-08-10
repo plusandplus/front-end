@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/index.hook';
 import { formatDate } from '../../utils/calendar';
@@ -39,7 +39,7 @@ import { CgSmartHomeRefrigerator } from 'react-icons/cg';
 import { GiCoffeePot, GiWashingMachine, GiWineBottle } from 'react-icons/gi';
 import { BsSpeakerFill } from 'react-icons/bs';
 import { FaPumpSoap } from 'react-icons/fa';
-import {calendarAction} from "../../store/modules/calendar/calendar.slice";
+import { calendarAction } from '../../store/modules/calendar/calendar.slice';
 
 export interface paymentProps extends roomData {
   checkInDate: number[];
@@ -83,7 +83,7 @@ const RoomDescription = () => {
 
   useEffect(() => {
     dispatch(calendarAction.setCheckOutDate(undefined));
-    dispatch(calendarAction.setCheckInDate(undefined))
+    dispatch(calendarAction.setCheckInDate(undefined));
     const fetchData = async () => {
       await dispatch(getRoom(ROOM_ID));
     };

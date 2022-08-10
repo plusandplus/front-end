@@ -44,7 +44,11 @@ import {
   selectIsErrorModalOpen,
   selectIsPaymentCompleteModalOpen,
 } from '../../store/modules/modal/modal.select';
-import {formatDate, formatDateInSearch, getDateDiff} from '../../utils/calendar';
+import {
+  formatDate,
+  formatDateInSearch,
+  getDateDiff,
+} from '../../utils/calendar';
 import { useLocation } from 'react-router-dom';
 import { postOrder, postOrderProps } from '../../api/payment';
 import {
@@ -91,6 +95,14 @@ export const Payment = () => {
     selectIsPaymentCompleteModalOpen
   );
 
+  const VALIDTIME = 10;
+  const time = useRef<number>(VALIDTIME);
+
+  let intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
+
+  const [min, setMin] = useState(10);
+  const [sec, setSec] = useState(0);
+
   const isErrorModalOpen = useAppSelector(selectIsErrorModalOpen);
   const [userInfo, setUserInfo] = useState<userData>(InitialData);
 
@@ -98,13 +110,43 @@ export const Payment = () => {
     if (!state || !accessToken) {
       dispatch(modalAction.radioErrorModal());
     }
+
     const user = getUser(accessToken);
     user.then((res) => {
       setUserInfo(res.data.user);
       setIsNameError(res.data.user.nickName.length < 1);
       setIsTelError(res.data.user.phoneNumber.length < 1);
     });
+
+    intervalRef.current = setInterval(decreaseNum, 1000);
+    return () => {
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+      console.log('unmount api 요청');
+    };
   }, []);
+
+  useEffect(() => {
+    console.log(min, sec);
+    if (time.current <= 0) {
+      console.log('api호출');
+      // 시간이 초과되면 clearInterval 해줌
+      clearInterval(intervalRef.current as NodeJS.Timeout);
+    }
+  }, [sec]);
+
+  const timerReset = () => {
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+    time.current = VALIDTIME;
+    setMin(Math.floor(VALIDTIME / 60));
+    setSec(VALIDTIME % 60);
+  };
+
+  const decreaseNum = () => {
+    time.current -= 1; // 1초씩 감소
+
+    setMin(Math.floor(time.current / 60)); //useState로 분, 시를 계속 업데이트 쳐준다
+    setSec(time.current % 60);
+  };
 
   const [isNameError, setIsNameError] = useState<boolean>(false);
   const [isTelError, setIsTelError] = useState<boolean>(false);
@@ -181,11 +223,19 @@ export const Payment = () => {
       roomId: state.id,
       eventId: 1,
     };
-   const checkDate = new Date(state.checkOutDate[0],state.checkOutDate[1],state.checkOutDate[2]-1)
+    const checkDate = new Date(
+      state.checkOutDate[0],
+      state.checkOutDate[1],
+      state.checkOutDate[2] - 1
+    );
     const responseRoomIsPossible = getRoomDate(
       state.id,
       postData.startDate,
-      formatDateInSearch([checkDate.getFullYear(), checkDate.getMonth(), checkDate.getDate()])
+      formatDateInSearch([
+        checkDate.getFullYear(),
+        checkDate.getMonth(),
+        checkDate.getDate(),
+      ])
     );
 
     responseRoomIsPossible.then((res) => {
@@ -321,7 +371,14 @@ export const Payment = () => {
             <HeadText>금액 및 할인 정보*</HeadText>
             <PaymentPriceBox>
               <PaymentPriceText>총 예약 금액</PaymentPriceText>
-              <SalePrice> {(state.price * getDateDiff(state.checkInDate, state.checkOutDate)).toLocaleString()}원</SalePrice>
+              <SalePrice>
+                {' '}
+                {(
+                  state.price *
+                  getDateDiff(state.checkInDate, state.checkOutDate)
+                ).toLocaleString()}
+                원
+              </SalePrice>
             </PaymentPriceBox>
             <PaymentEventBox>
               <PaymentPriceText>적용가능 이벤트</PaymentPriceText>
@@ -337,7 +394,6 @@ export const Payment = () => {
                 {state.station_id.event_id
                   ? `${state.station_id.event_id.rate}%`
                   : ''}
-
               </EventRate>
             </PaymentEventBox>
             <Line />
@@ -345,16 +401,16 @@ export const Payment = () => {
               <PaymentPriceText>결제 금액</PaymentPriceText>
               <TotalPrice>
                 {state.station_id.event_id
-                    ? (
-                        state.price *
-                        (1 - state.station_id.event_id.rate / 100) *
-                        getDateDiff(state.checkInDate,state.checkOutDate)
+                  ? (
+                      state.price *
+                      (1 - state.station_id.event_id.rate / 100) *
+                      getDateDiff(state.checkInDate, state.checkOutDate)
                     ).toLocaleString()
-                    : (
-                        state.price * getDateDiff(state.checkInDate,state.checkOutDate)
+                  : (
+                      state.price *
+                      getDateDiff(state.checkInDate, state.checkOutDate)
                     ).toLocaleString()}
                 원
-
               </TotalPrice>
             </PaymentPriceBox>
           </PaymentInfoBox>
@@ -362,10 +418,12 @@ export const Payment = () => {
             {state.station_id.event_id
               ? (
                   state.price *
-                  (1 - state.station_id.event_id.rate / 100) * getDateDiff(state.checkInDate,state.checkOutDate)
+                  (1 - state.station_id.event_id.rate / 100) *
+                  getDateDiff(state.checkInDate, state.checkOutDate)
                 ).toLocaleString()
               : (
-                    state.price * getDateDiff(state.checkInDate,state.checkOutDate)
+                  state.price *
+                  getDateDiff(state.checkInDate, state.checkOutDate)
                 ).toLocaleString()}
             원 결제하기
           </PaymentButton>
