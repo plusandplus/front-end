@@ -16,6 +16,7 @@ import {
   CategoryType,
   GetThemeDataType,
   ThemeType,
+  DeleteCategoryErrorResponse,
 } from '../../api/admin-category/admin-category.type';
 import {
   Container,
@@ -28,6 +29,7 @@ import {
   AddButton,
   AddButtonContainer,
 } from './adminCategory.style';
+import { AxiosError, AxiosResponse } from 'axios';
 
 interface EditCategoryModalProp {
   id: number;
@@ -85,31 +87,31 @@ export default function AdminCateogry(): JSX.Element {
     },
   });
 
-  const categoryDeleteMutate = useMutation(deleteCategory, {
-    onMutate: (variable) => {
-      console.log(variable);
-    },
+  const categoryDeleteMutate = useMutation<AxiosResponse, AxiosError, number>(
+    deleteCategory,
+    {
+      onSuccess: (data) => {
+        if (clickedButtonName === BUTTON_NAMES.LOCAL) {
+          queryClient.invalidateQueries(['getLocal']);
+        } else if (clickedButtonName === BUTTON_NAMES.STAY_TYPE) {
+          queryClient.invalidateQueries(['getStayType']);
+        }
+      },
+      onError: (error) => {
+        const responseData = error.response
+          ?.data as DeleteCategoryErrorResponse;
 
-    onSuccess: (data) => {
-      console.log(data);
-      if (clickedButtonName === BUTTON_NAMES.LOCAL) {
-        queryClient.invalidateQueries(['getLocal']);
-      } else if (clickedButtonName === BUTTON_NAMES.STAY_TYPE) {
-        queryClient.invalidateQueries(['getStayType']);
-      }
-    },
-    onError: (error) => {
-      // console.log('onError: ', error.response);
-      // alert(`삭제에러: ${data.response.data.message}\n\n해당 카테고리에 숙소가 등록되어 있으면 삭제할 수 없습니다.
-      // `);
-      alert(
-        '삭제에러: 해당 카테고리에 숙소가 등록되어 있어 카테고리를 삭제할 수 없습니다.'
-      );
-    },
-  });
+        if (responseData.statusCode === 404)
+          alert(`삭제에러: ${responseData.message}`);
+        else if (responseData.statusCode === 406)
+          alert(`삭제에러: ${responseData.message}\n\n해당 카테고리로 숙소가 등록되어 있으면 삭제할 수 없습니다.
+        `);
+      },
+    }
+  );
 
   const themeDeleteMutate = useMutation(deleteTheme, {
-    onSuccess: (data, variables, context) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(['getTheme']);
     },
   });

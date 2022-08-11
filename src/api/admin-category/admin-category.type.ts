@@ -23,3 +23,9 @@ export interface AddCategoryDataType {
   name: string;
   classification: string;
 }
+
+export interface DeleteCategoryErrorResponse {
+  statusCode: number;
+  message: string;
+  error: string;
+}

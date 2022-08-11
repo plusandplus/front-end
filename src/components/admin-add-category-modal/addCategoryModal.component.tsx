@@ -51,8 +51,7 @@ export default function AddCategoryModal(): JSX.Element {
   const themeData = queryClient.getQueryData(['getTheme']) as GetThemeDataType;
 
   const categoryAddMutate = useMutation(addCategory, {
-    onSuccess: (data, variables, context) => {
-      console.log('success', data, variables, context);
+    onSuccess: () => {
       if (clickedButtonName === BUTTON_NAMES.LOCAL) {
         queryClient.invalidateQueries(['getLocal']);
       } else if (clickedButtonName === BUTTON_NAMES.STAY_TYPE) {
