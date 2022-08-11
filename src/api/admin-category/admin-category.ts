@@ -79,29 +79,9 @@ export const patchTheme = ({ id, name }: PatchThemeType) => {
   });
 };
 
-interface DeleteCategoryErrorResponse {
-  statusCode: number;
-  message: string;
-  error: string;
-}
-
 //* DELETE
 // 지역, 스테이유형 삭제
 export const deleteCategory = async (id: number) => {
-  // try {
-  //   const response = await axios.delete(
-  //     `${process.env.REACT_APP_API_URL}/categories/${id}`
-  //   );
-  //   return response.data;
-  // } catch (err) {
-  //   if (request.isAxiosError(err) && err.response) {
-  //     return err.response.data as DeleteCategoryErrorResponse;
-  //   }
-  // }
-  // const response = await axios.delete(
-  //   `${process.env.REACT_APP_API_URL}/categories/${id}`
-  // );
-  // return response.data;
   return axios.delete(`${process.env.REACT_APP_API_URL}/categories/${id}`);
 };
 

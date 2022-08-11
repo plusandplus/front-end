@@ -90,7 +90,7 @@ export default function AdminCateogry(): JSX.Element {
   const categoryDeleteMutate = useMutation<AxiosResponse, AxiosError, number>(
     deleteCategory,
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         if (clickedButtonName === BUTTON_NAMES.LOCAL) {
           queryClient.invalidateQueries(['getLocal']);
         } else if (clickedButtonName === BUTTON_NAMES.STAY_TYPE) {
@@ -104,17 +104,27 @@ export default function AdminCateogry(): JSX.Element {
         if (responseData.statusCode === 404)
           alert(`삭제에러: ${responseData.message}`);
         else if (responseData.statusCode === 406)
-          alert(`삭제에러: ${responseData.message}\n\n해당 카테고리로 숙소가 등록되어 있으면 삭제할 수 없습니다.
+          alert(`삭제에러: ${responseData.message}\n\n 해당 카테고리를 갖는 숙소데이터가 있는 경우 카테고리를 삭제할 수 없습니다.
         `);
       },
     }
   );
 
-  const themeDeleteMutate = useMutation(deleteTheme, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['getTheme']);
-    },
-  });
+  const themeDeleteMutate = useMutation<AxiosResponse, AxiosError, number>(
+    deleteTheme,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['getTheme']);
+      },
+      onError: (error) => {
+        const responseData = error.response
+          ?.data as DeleteCategoryErrorResponse;
+
+        if (responseData.statusCode === 404)
+          alert(`테마 삭제에러: ${responseData.message}`);
+      },
+    }
+  );
 
   const clickDeleteCategory = (id: number) => {
     if (!window.confirm('해당 카테고리를 정말로 삭제하시겠습니까?')) return;
