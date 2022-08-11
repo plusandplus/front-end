@@ -1,5 +1,4 @@
-import axios, { AxiosError } from 'axios';
-import request from 'axios';
+import axios from 'axios';
 
 interface AddCateogryType {
   name: string;
