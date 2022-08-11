@@ -12,6 +12,7 @@ import Payment from '../components/payment/payment.component';
 import Auth from './auth/auth.component';
 import RoomDescription from './room-description/roomDescription.component';
 import Event from './event/event.component';
+import AdminCateogry from './admin-category/adminCategory.component';
 
 export const ROUTES = {
   HOME: {
@@ -86,5 +87,10 @@ export const ROUTES = {
     path: '/auth/*',
     link: '/auth/*',
     component: Auth,
+  },
+  ADMIN_CATEGORY: {
+    path: '/admin/category',
+    link: '/admin/category',
+    component: AdminCateogry,
   },
 };

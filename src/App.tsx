@@ -2,7 +2,6 @@ import { Routes, Route } from 'react-router-dom';
 import { ROUTES } from './routes/routes';
 
 import './App.css';
-import UserList from './components/user-list/user-list.component';
 
 function App(): JSX.Element {
   const ROUTES_ARR = Object.values(ROUTES);
