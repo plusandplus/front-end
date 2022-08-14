@@ -10,4 +10,6 @@ export interface GetOneEventSuccessResponse {
 
 export interface GetAllEventsSuccessResponse {
   data: GetOneEventSuccessResponse[];
+  message: string;
+  statusCode: number;
 }
