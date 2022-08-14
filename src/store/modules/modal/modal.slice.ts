@@ -13,6 +13,7 @@ export interface ModalState {
   isErrorModalOpen: boolean;
   isAdminAddCategoryModalOpen: boolean;
   isAdminEditCategoryModalOpen: boolean;
+  isAdminEventModalOpen: boolean;
 }
 
 const initialState: ModalState = {
@@ -28,6 +29,7 @@ const initialState: ModalState = {
   isErrorModalOpen: false,
   isAdminAddCategoryModalOpen: false,
   isAdminEditCategoryModalOpen: false,
+  isAdminEventModalOpen: false,
 };
 
 export const modalSlice = createSlice({
@@ -69,6 +71,9 @@ export const modalSlice = createSlice({
     },
     radioAdminEditCategoryModal: (state) => {
       state.isAdminEditCategoryModalOpen = !state.isAdminEditCategoryModalOpen;
+    },
+    radioAdminEventModal: (state) => {
+      state.isAdminEventModalOpen = !state.isAdminEventModalOpen;
     },
   },
 });
