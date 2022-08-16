@@ -5,12 +5,12 @@ export interface StayBaseType {
   content: string;
   minprice: number;
   maxprice: number;
-  local_id: {
+  local: {
     id: number;
     name: string;
     classification: string;
   };
-  stay_id: {
+  stay: {
     id: number;
     name: string;
     classification: string;
@@ -21,7 +21,7 @@ export interface StayBaseType {
       name: string;
     }
   ];
-  event_id: {
+  event: {
     id: number;
     name: string;
     start_date: string;

@@ -11,12 +11,12 @@ const initialState: PopularStayType = {
       content: '',
       minprice: 0,
       maxprice: 0,
-      local_id: {
+      local: {
         id: 0,
         name: '',
         classification: '',
       },
-      stay_id: {
+      stay: {
         id: 0,
         name: '',
         classification: '',
@@ -27,7 +27,7 @@ const initialState: PopularStayType = {
           name: '',
         },
       ],
-      event_id: {
+      event: {
         id: 0,
         name: '',
         start_date: '',

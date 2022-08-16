@@ -69,7 +69,7 @@ const initialState: StayType = {
     checkout_time: '',
     created_at: '',
     updated_at: '',
-    station_id: {
+    station: {
       id: 0,
       name: '',
       image: '',
