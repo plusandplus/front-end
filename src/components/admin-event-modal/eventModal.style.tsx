@@ -26,6 +26,10 @@ export const EventInput = styled.input`
     border: 1px solid ${theme.colors.main};
     outline: none;
   }
+
+  &.warning {
+    border: 1px solid red;
+  }
 `;
 
 export const InputTitle = styled.span`
@@ -36,7 +40,7 @@ export const InputTitle = styled.span`
   width: 120px;
 
   &.date {
-    width: 162px;
+    width: 146px;
   }
 `;
 
@@ -82,4 +86,19 @@ export const Button = styled.button`
     color: #fff;
     margin-left: 20px;
   }
+`;
+
+export const ImagesContainer = styled.div`
+  display: flex;
+`;
+
+export const WarningMessageContainer = styled.div`
+  margin-bottom: 25px;
+  display: flex;
+`;
+
+export const WarningMessage = styled.div`
+  font-size: 12px;
+  color: red;
+  padding-top: 5px;
 `;
