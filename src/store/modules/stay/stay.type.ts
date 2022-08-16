@@ -65,7 +65,7 @@ export interface StayType {
     created_at: string;
     updated_at: string;
 
-    station_id: {
+    station: {
       id: number;
       name: string;
       image: string;
