@@ -45,12 +45,12 @@ const initialState: SearchStateType = {
         content: '',
         minprice: 0,
         maxprice: 0,
-        local_id: {
+        local: {
           id: 0,
           name: '',
           classification: '',
         },
-        stay_id: {
+        stay: {
           id: 0,
           name: '',
           classification: '',
@@ -61,7 +61,7 @@ const initialState: SearchStateType = {
             name: '',
           },
         ],
-        event_id: {
+        event: {
           id: 0,
           name: '',
           start_date: '',

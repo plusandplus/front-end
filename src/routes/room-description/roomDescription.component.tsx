@@ -115,7 +115,7 @@ const RoomDescription = () => {
         <Header></Header>
         <CalendarBox>
           <RoomInFormationText>예약 정보</RoomInFormationText>
-          <DescriptionName>{roomData.station_id.name}</DescriptionName>
+          <DescriptionName>{roomData.station.name}</DescriptionName>
           <SelectCalendarText ref={dateRef} onClick={handleOnClickCalender}>
             <span>
               {checkInDate !== undefined

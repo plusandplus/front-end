@@ -194,9 +194,9 @@ export default function Search(): JSX.Element {
                 stayTitle={item.name}
                 minPrice={item.minprice}
                 maxPrice={item.maxprice}
-                stayRegion={item.local_id.name}
-                StayType={item.stay_id.name}
-                event={item.event_id}
+                stayRegion={item.local.name}
+                StayType={item.stay.name}
+                event={item.event}
                 likes={item.likes}
               />,
             ])

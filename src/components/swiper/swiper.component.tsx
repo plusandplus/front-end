@@ -33,7 +33,7 @@ interface SwiperDataType {
   image: string;
   minprice?: number;
   maxprice?: number;
-  local_id?: {
+  local?: {
     id?: number;
     name?: string;
     classification?: string;
@@ -106,7 +106,7 @@ export default function SwiperComponent({
                 <SlideDescriptionContainer>
                   <SlideTitle>{item.name}</SlideTitle>
                   <StayDescription>
-                    <span>{item.local_id?.name}</span>
+                    <span>{item.local?.name}</span>
                     <span>{`₩${item.minprice?.toLocaleString()} ~ ₩${item.maxprice?.toLocaleString()}`}</span>
                   </StayDescription>
                 </SlideDescriptionContainer>
