@@ -63,3 +63,8 @@ export const selectIsAdminEditCategoryModalOpen = createSelector(
   [selectModalReducer],
   (modal) => modal.isAdminEditCategoryModalOpen
 );
+
+export const selectIsAdminEventModalOpen = createSelector(
+  [selectModalReducer],
+  (modal) => modal.isAdminEventModalOpen
+);

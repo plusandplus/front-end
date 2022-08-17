@@ -18,7 +18,7 @@ import {
   SliderTitle,
   Wrapper,
 } from './home.style';
-import {navigatorAction} from "../../store/modules/navigator/navigator.slice";
+import { navigatorAction } from '../../store/modules/navigator/navigator.slice';
 
 export default function Home(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ export default function Home(): JSX.Element {
   const popularStays = useAppSelector(selectPopularStay);
 
   useEffect(() => {
-    dispatch(navigatorAction.setCurrnetPage('home'))
+    dispatch(navigatorAction.setCurrnetPage('home'));
     const fetchData = async () => {
       await dispatch(fetchAllEvents());
       await dispatch(fetchPopularStay());
@@ -45,10 +45,6 @@ export default function Home(): JSX.Element {
     <Container>
       <Wrapper>
         <MainBanner>
-          {/* <MainBannerImage
-            src="https://d2u1fvsvew9tft.cloudfront.net/plus/1658500098920이벤트배너.png"
-            alt="배너이미지"
-          /> */}
           <BannerSwiper imgUrlArr={BANNER_IMAGES} />
         </MainBanner>
 

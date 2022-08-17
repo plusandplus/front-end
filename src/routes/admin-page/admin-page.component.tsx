@@ -50,7 +50,7 @@ export default function Admin(): JSX.Element {
           <BiCategory className="icon" />
           <span>카테고리</span>
         </Content>
-        <Content to={ROUTES.ADMIN_CATEGORY.path}>
+        <Content to={ROUTES.ADMIN_EVENT.path}>
           <AiOutlineNotification className="icon" />
           <span>이벤트</span>
         </Content>

@@ -13,6 +13,7 @@ import Auth from './auth/auth.component';
 import RoomDescription from './room-description/roomDescription.component';
 import Event from './event/event.component';
 import AdminCateogry from './admin-category/adminCategory.component';
+import AdminEvent from './admin-event/adminEvent.component';
 
 export const ROUTES = {
   HOME: {
@@ -92,5 +93,10 @@ export const ROUTES = {
     path: '/admin/category',
     link: '/admin/category',
     component: AdminCateogry,
+  },
+  ADMIN_EVENT: {
+    path: '/admin/event',
+    link: '/admin/event',
+    component: AdminEvent,
   },
 };
