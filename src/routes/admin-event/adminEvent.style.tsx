@@ -15,6 +15,10 @@ export const AddButton = styled.button`
   color: #fff;
   font-size: 20px;
   margin-bottom: 30px;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const MainContents = styled.div`
@@ -24,14 +28,20 @@ export const MainContents = styled.div`
 export const Title = styled.h3``;
 
 export const AllEventContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
 export const EventContainer = styled.div`
-  margin-right: 40px;
+  margin: 0 40px 20px 0;
   border: 1px solid black;
   padding: 10px;
   border-radius: 5px;
+`;
+
+export const EventImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export const EventImage = styled.img`
@@ -60,6 +70,7 @@ export const EventPeriod = styled.div`
 export const HandelEventButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 `;
 
 export const HandelEventButton = styled.button`
@@ -69,7 +80,6 @@ export const HandelEventButton = styled.button`
   height: 30px;
   border-radius: 10px;
   margin-right: 10px;
-  margin-bottom: 5px;
 
   &:last-child {
     margin-right: 0px;

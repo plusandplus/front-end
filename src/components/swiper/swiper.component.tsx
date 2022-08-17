@@ -43,6 +43,7 @@ interface SwiperDataType {
 interface StayType extends StayBaseType {
   start_date?: string;
   end_date?: string;
+  rate?: number;
 }
 
 interface swiperDataArrType {
@@ -79,6 +80,8 @@ export default function SwiperComponent({
     },
   };
 
+  console.log(swiperDataArr);
+
   return (
     <SwiperContainer {...swiperParams}>
       {swiperDataArr.map((item, index) => {
@@ -86,7 +89,7 @@ export default function SwiperComponent({
           <SwiperSlide key={index}>
             <LinkEvent
               to={
-                item.name.includes('이벤트')
+                item?.rate
                   ? `${ROUTES.EVENT.link}/${item.id}`
                   : `${ROUTES.STAY.link}/${item.id}`
               }
@@ -97,7 +100,7 @@ export default function SwiperComponent({
                   src={item.image}
                 />
               </SlideContainer>
-              {item.name.includes('이벤트') ? (
+              {item?.rate ? (
                 <SlideDescriptionContainer>
                   <SlideTitle>{item.name}</SlideTitle>
                   <StayDescription>{`${item?.start_date} ~ ${item?.end_date}`}</StayDescription>

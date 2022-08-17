@@ -9,6 +9,11 @@ interface EventPropType {
   rate?: number;
 }
 
+interface patchEventPropType {
+  eventId: number;
+  data: EventPropType;
+}
+
 //* GET
 // 모든 이벤트 조회
 export const getAllEvents = async () => {
@@ -26,7 +31,6 @@ export const getOneEvent = async (eventId: number) => {
 
 //* POST
 export const postEvent = async (data: EventPropType) => {
-  // const { name, image, detailImage, start_date, end_date, rate } = data;
   const response = await axios.post(
     `${process.env.REACT_APP_API_URL}/events`,
     data
@@ -34,8 +38,18 @@ export const postEvent = async (data: EventPropType) => {
   return response.data;
 };
 
+export const postEventImage = async (formData: FormData) => {
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_URL}/uploads`,
+    formData
+  );
+
+  return response.data;
+};
+
 //* PATCH
-export const patchEvent = async (eventId: number, data: EventPropType) => {
+export const patchEvent = async (prop: patchEventPropType) => {
+  const { eventId, data } = prop;
   const response = await axios.patch(
     `${process.env.REACT_APP_API_URL}/events/${eventId}`,
     data

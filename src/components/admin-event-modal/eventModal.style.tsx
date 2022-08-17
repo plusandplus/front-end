@@ -4,7 +4,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export const ModalContainer = styled.div`
-  padding: 30px 30px 20px 30px;
+  padding: 20px 30px 0;
+  max-height: calc(100vh - 270px);
+  overflow-y: auto;
+  position: relative;
+  margin-bottom: 70px;
 `;
 
 export const InputContainer = styled.div`
@@ -44,6 +48,10 @@ export const InputTitle = styled.span`
   }
 `;
 
+export const InputFile = styled.input`
+  margin: 10px 0;
+`;
+
 export const EventDatePicker = styled(DatePicker)`
   width: 250px;
   height: 42px;
@@ -65,8 +73,15 @@ export const EventRateInput = styled(EventInput)`
 `;
 
 export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-end;
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid ${theme.colors.border};
+  align-items: center;
 `;
 
 export const Button = styled.button`
@@ -76,6 +91,7 @@ export const Button = styled.button`
   height: 45px;
   border-radius: 10px;
   font-size: 16px;
+  margin-right: 20px;
 
   &:hover {
     transform: scale(1.1);
@@ -84,7 +100,7 @@ export const Button = styled.button`
   &.add {
     background-color: ${theme.colors.main};
     color: #fff;
-    margin-left: 20px;
+    // margin-left: 20px;
   }
 `;
 
