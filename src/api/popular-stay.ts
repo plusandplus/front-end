@@ -10,3 +10,10 @@ export const fetchPopularStay = createAsyncThunk(
     return response.data;
   }
 );
+
+export const getPopularStay = async () => {
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/stations/likes`
+  );
+  return response.data;
+};

@@ -12,6 +12,7 @@ import {
   GetAllEventsSuccessResponse,
 } from '../../api/admin-event/admin-event.type';
 import { selectIsAdminEventModalOpen } from '../../store/modules/modal/modal.select';
+import { compareDates } from '../../utils/compareDates';
 import EventModal from '../../components/admin-event-modal/eventModal.component';
 import {
   Container,
@@ -51,37 +52,16 @@ const AdminEvent = (): JSX.Element => {
     detailImage: '',
   });
 
-  const getTodayDate = useCallback(() => {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let date = today.getDate();
-
-    let todayDate = `${year}-${month < 10 ? `0${month}` : month}-${
-      date < 10 ? `0${date}` : date
-    }`;
-
-    return todayDate;
-  }, []);
-
-  const isEndedEvent = (todayDate: string, eventEndDate: string) => {
-    return todayDate > eventEndDate;
-  };
-
   useQuery<GetAllEventsSuccessResponse>(['getAllEvents'], getAllEvents, {
     refetchOnWindowFocus: false,
     retry: 0,
     onSuccess: (data) => {
-      const today = getTodayDate();
-
-      const eventsInProgress = data.data.filter(
-        (el) => !isEndedEvent(today, el.end_date)
+      const eventsInProgress = data.data.filter((el) =>
+        compareDates(el.end_date)
       );
       setEventsInProgress(eventsInProgress);
 
-      const endedEvents = data.data.filter((el) =>
-        isEndedEvent(today, el.end_date)
-      );
+      const endedEvents = data.data.filter((el) => !compareDates(el.end_date));
       setEndedEvents(endedEvents);
     },
   });
@@ -89,12 +69,13 @@ const AdminEvent = (): JSX.Element => {
   const eventDeleteMutate = useMutation(deleteEvent, {
     onSuccess: () => {
       queryClient.invalidateQueries(['getAllEvents']);
+      queryClient.invalidateQueries(['allEvents']);
       alert('이벤트를 삭제했습니다.');
     },
   });
 
   const OpenModal = () => {
-    setModalState((prev) => {
+    setModalState(() => {
       return 'add';
     });
     dispatch(modalAction.radioAdminEventModal());
@@ -113,7 +94,7 @@ const AdminEvent = (): JSX.Element => {
         ...data.data,
       };
     });
-    setModalState((prev) => {
+    setModalState(() => {
       return 'edit';
     });
     setTimeout(() => {

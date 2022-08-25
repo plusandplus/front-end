@@ -7,12 +7,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-interface ImageUrlType {
-  imgUrlArr: string[];
-}
-
-export default function BannerSwiper({ imgUrlArr }: ImageUrlType): JSX.Element {
+export default function BannerSwiper(): JSX.Element {
   SwiperCore.use([Navigation, Pagination, Autoplay]);
+
+  const BANNER_IMAGES = [
+    'https://d2u1fvsvew9tft.cloudfront.net/plus/1658500098920이벤트배너.png',
+    'https://d2u1fvsvew9tft.cloudfront.net/plus/1658498830946이벤트배너2.png',
+  ];
 
   const [mainIndex, setMainIndex] = useState(0);
   const navigationPrevRef = useRef(null);
@@ -38,15 +39,13 @@ export default function BannerSwiper({ imgUrlArr }: ImageUrlType): JSX.Element {
 
   return (
     <Swiper {...swiperParams}>
-      {/* {imgUrlArr.map((item, index) => {
-        return <SwiperSlide key={index}>{item}</SwiperSlide>;
-      })} */}
-      <SwiperSlide>
-        <img src={imgUrlArr[0]} alt="이미지 배너" style={{ width: '100%' }} />
-      </SwiperSlide>
-      <SwiperSlide>
-        <img src={imgUrlArr[1]} alt="이미지 배너" style={{ width: '100%' }} />
-      </SwiperSlide>
+      {BANNER_IMAGES.map((el) => {
+        return (
+          <SwiperSlide key={el}>
+            <img src={el} alt="이미지 배너" style={{ width: '100%' }} />
+          </SwiperSlide>
+        );
+      })}
     </Swiper>
   );
 }
