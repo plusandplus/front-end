@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-interface EventPropType {
+export interface EventPropType {
+  id?: number;
   name?: string;
   image?: string;
   detailImage?: string;

@@ -1,16 +1,14 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/index.hook';
-import { fetchAllEvents } from '../../api/event';
-import { fetchPopularStay } from '../../api/popular-stay';
-import { selectAllEvents } from '../../store/modules/event/event.select';
-import { selectPopularStay } from '../../store/modules/popular-stay/popularStay.select';
+import { useQuery } from '@tanstack/react-query';
+import { compareDates } from '../../utils/compareDates';
+import { GetAllEventsSuccessResponse } from '../../components/swiper/eventSwiper.component';
 
 import Container from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
 import Footer from '../../components/footer/footer.component';
-import SwiperComponent from '../../components/swiper/swiper.component';
 import UserInfoModal from '../../components/user-info-modal/userInfoModal.component';
-import BannerSwiper from '../../components/banner-swiper/bannerSwiper.component';
+import BannerSwiper from '../../components/swiper/bannerSwiper.component';
+import EventSwiper from '../../components/swiper/eventSwiper.component';
+import StaySwiper from '../../components/swiper/staySwiper.component';
 
 import {
   MainBanner,
@@ -18,44 +16,33 @@ import {
   SliderTitle,
   Wrapper,
 } from './home.style';
-import { navigatorAction } from '../../store/modules/navigator/navigator.slice';
 
 export default function Home(): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  const events = useAppSelector(selectAllEvents);
-  const popularStays = useAppSelector(selectPopularStay);
-
-  useEffect(() => {
-    dispatch(navigatorAction.setCurrnetPage('home'));
-    const fetchData = async () => {
-      await dispatch(fetchAllEvents());
-      await dispatch(fetchPopularStay());
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  const BANNER_IMAGES = [
-    'https://d2u1fvsvew9tft.cloudfront.net/plus/1658500098920이벤트배너.png',
-    'https://d2u1fvsvew9tft.cloudfront.net/plus/1658498830946이벤트배너2.png',
-  ];
+  const { data } = useQuery<GetAllEventsSuccessResponse>(['allEvents'], {});
 
   return (
     <Container>
       <Wrapper>
         <MainBanner>
-          <BannerSwiper imgUrlArr={BANNER_IMAGES} />
+          <BannerSwiper />
         </MainBanner>
+
+        {data &&
+          data.data.filter((el) => compareDates(el.end_date)).length !== 0 && (
+            <SliderContainer>
+              <SliderTitle>현재 진행중인 이벤트</SliderTitle>
+              <EventSwiper />
+            </SliderContainer>
+          )}
 
         <SliderContainer>
           <SliderTitle>현재 진행중인 이벤트</SliderTitle>
-          <SwiperComponent swiperDataArr={events}></SwiperComponent>
+          <EventSwiper />
         </SliderContainer>
 
         <SliderContainer>
           <SliderTitle>혼자와서 둘이가는 인기순</SliderTitle>
-          <SwiperComponent swiperDataArr={popularStays}></SwiperComponent>
+          <StaySwiper />
         </SliderContainer>
 
         <Header />

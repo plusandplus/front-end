@@ -140,6 +140,7 @@ const EventModal = (prop: PropType): JSX.Element => {
       alert('이벤트를 추가했습니다.');
       closeModal();
       queryClient.invalidateQueries(['getAllEvents']);
+      queryClient.invalidateQueries(['allEvents']);
     },
   });
 
@@ -148,6 +149,7 @@ const EventModal = (prop: PropType): JSX.Element => {
       alert('이벤트를 수정했습니다.');
       closeModal();
       queryClient.invalidateQueries(['getAllEvents']);
+      queryClient.invalidateQueries(['allEvents']);
     },
     onError: (error) => {
       console.log('error: ', error);

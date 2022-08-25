@@ -69,6 +69,7 @@ const AdminEvent = (): JSX.Element => {
   const eventDeleteMutate = useMutation(deleteEvent, {
     onSuccess: () => {
       queryClient.invalidateQueries(['getAllEvents']);
+      queryClient.invalidateQueries(['allEvents']);
       alert('이벤트를 삭제했습니다.');
     },
   });
